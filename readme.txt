@@ -1,10 +1,10 @@
 === Easy Content Lists ===
-Contributors: (your_username)
+Contributors: razorfrog
 Tags: pages, posts, taxonomies, tags, lists
 Requires at least: 5.0
-Tested up to: 6.4.3
+Tested up to: 6.5.3
 Requires PHP: 7.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,5 +65,9 @@ Use the following shortcodes to display lists on your WordPress site:
 - `error_message`: Custom error message (default: 'ERROR: Can\'t find tags.')
 
 == Changelog ==
+= 1.0.1 =
+- Added conditions to check if shortcodes already exist to avoid conflicts.
+- Improved data sanitization and escaping.
+
 = 1.0.0 =
 - Initial release.
