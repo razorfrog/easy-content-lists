@@ -3,7 +3,7 @@
  * Plugin Name:       Easy Content Lists
  * Plugin URI:        https://razorfrog.com/easy-content-lists/
  * Description:       Shortcodes for easily listing all your pages, posts, taxonomies, and tags.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Razorfrog Web Design
@@ -52,6 +52,11 @@ if ( ! shortcode_exists( 'razorfrog_pages_list' ) ) {
 						$top_page->children = array();
 						rflists_sort_pages_hierarchically( $pages, $top_page->children, $top_page->ID );
 				}
+		}
+
+		function rflists_filter_get_pages_args( $query_args, $parsed_args ) {
+			$query_args['has_password'] = false; // exclude password-protected pages
+			return $query_args;
 		}
 
 		/**
@@ -111,7 +116,9 @@ if ( ! shortcode_exists( 'razorfrog_pages_list' ) ) {
 				);
 
 				// Retrieve pages based on arguments.
+				add_filter( 'get_pages_query_args', 'rflists_filter_get_pages_args', 10, 2 );
 				$pages = get_pages( $args );
+				remove_filter( 'get_pages_query_args', 'rflists_filter_get_pages_args', 10 );
 
 				// Check for pages and generate output.
 				if ( $pages && ! is_wp_error( $pages ) ) {
@@ -168,6 +175,7 @@ if ( ! shortcode_exists( 'razorfrog_posts_list' ) ) {
 						'post__not_in'   => array_filter( array_map( 'intval', explode( ',', $atts['exclude'] ) ) ),
 						'posts_per_page' => intval( $atts['posts_per_page'] ),
 						'meta_key'       => sanitize_text_field( $atts['meta_key'] ),
+						'has_password'  => false,
 				);
 
 				// Taxonomy query.
