@@ -1,15 +1,17 @@
 <?php
+
 /**
  * Plugin Name:       Easy Content Lists
  * Plugin URI:        https://razorfrog.com/easy-content-lists/
  * Description:       Shortcodes for easily listing all your pages, posts, taxonomies, and tags.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Razorfrog Web Design
  * Author URI:        https://razorfrog.com/
  * License:           GPLv2 or later
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       easy-content-lists
  */
 
 defined( 'ABSPATH' ) || exit;
