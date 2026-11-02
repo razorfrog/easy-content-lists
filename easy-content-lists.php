@@ -4,7 +4,7 @@
  * Plugin Name:       Easy Content Lists
  * Plugin URI:        https://razorfrog.com/easy-content-lists/
  * Description:       Shortcodes for easily listing all your pages, posts, taxonomies, and tags.
- * Version:           1.0.3
+ * Version:           1.0.4
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Razorfrog Web Design
@@ -76,11 +76,14 @@ if ( ! shortcode_exists( 'razorfrog_pages_list' ) ) {
 				foreach ( $pages as $page ) {
 						$title = esc_html( $page->post_title );
 						$link  = esc_url( get_page_link( $page ) );
-						$html .= "<li class='page-item page-item-{$page->ID}'><a href='{$link}' rel='bookmark'>{$title}</a></li>";
+						$html .= "<li class='page-item page-item-{$page->ID}'><a href='{$link}' rel='bookmark'>{$title}</a>";
 
+						// Child pages go inside the parent's <li>, so the nesting is valid HTML.
 						if ( is_array( $page->children ) && ! empty( $page->children ) ) {
 								$html .= rflists_print_pages_hierarchically( $page->children, 0, $loop + 1 );
 						}
+
+						$html .= '</li>';
 				}
 
 				$html .= '</ul>';
@@ -282,11 +285,14 @@ if ( ! shortcode_exists( 'razorfrog_taxonomy_list' ) ) {
 						$html .= "<li class='term-item term-item-{$term->term_id}'>";
 						$html .= "<span class='term-item-inner'>";
 						$html .= "<a href='$link'>$name</a>$count_span";
-						$html .= '</span></li>';
+						$html .= '</span>';
 
+						// Child terms go inside the parent's <li>, so the nesting is valid HTML.
 						if ( is_array( $term->children ) && ! empty( $term->children ) ) {
 								$html .= rflists_print_terms_hierarchically( $term->children, 0, $count, $loop + 1 );
 						}
+
+						$html .= '</li>';
 				}
 
 				$html .= '</ul>';
