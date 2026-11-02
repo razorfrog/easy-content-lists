@@ -1,0 +1,14 @@
+# Not shipped to WordPress.org
+.git
+.github
+.gitignore
+.distignore
+.DS_Store
+__MACOSX
+README.md
+phpcs.xml.dist
+composer.json
+composer.lock
+vendor
+node_modules
+*.zip
