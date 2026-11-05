@@ -4,7 +4,7 @@ Tags: pages, posts, taxonomies, tags, lists
 Requires at least: 5.2
 Tested up to: 7.1
 Requires PHP: 7.2
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,7 +33,7 @@ Use the following shortcodes to display lists on your WordPress site:
 - `exclude`: Exclude specific page IDs (default: '')
 - `child_of`: Display child pages of a specific page ID (default: 0)
 - `col`: Column number for styling (default: 1)
-- `error_message`: Custom error message (default: 'ERROR: Can\'t find pages.')
+- `error_message`: Message shown when there are no pages (default: 'ERROR: Can\'t find pages.', shown only to logged-in editors; a custom message shows to everyone; empty shows nothing)
 
 = What parameters does `[razorfrog_posts_list]` accept? =
 - `post_type`: Specify the post type (default: 'post')
@@ -46,7 +46,7 @@ Use the following shortcodes to display lists on your WordPress site:
 - `terms`: Specific terms to include/exclude (default: '')
 - `meta_key`: Meta key for filtering (default: '')
 - `meta_value`: Meta value for filtering (default: '')
-- `error_message`: Custom error message (default: 'ERROR: Can\'t find posts.')
+- `error_message`: Message shown when there are no posts (default: 'ERROR: Can\'t find posts.', shown only to logged-in editors; a custom message shows to everyone; empty shows nothing)
 
 = What parameters does `[razorfrog_taxonomy_list]` accept? =
 - `taxonomy`: Specify the taxonomy (default: 'category')
@@ -54,7 +54,7 @@ Use the following shortcodes to display lists on your WordPress site:
 - `order`: 'ASC' or 'DESC' (default: 'ASC')
 - `col`: Column number for styling (default: 1)
 - `count`: Show term count (default: 'true')
-- `error_message`: Custom error message (default: 'ERROR: Can\'t find taxonomy.')
+- `error_message`: Message shown when there are no terms (default: 'ERROR: Can\'t find taxonomy.', shown only to logged-in editors; a custom message shows to everyone; empty shows nothing)
 
 = What parameters does `[razorfrog_tags_list]` accept? =
 - `query_type`: 'include' or 'exclude' specific tags (default: 'exclude')
@@ -62,9 +62,12 @@ Use the following shortcodes to display lists on your WordPress site:
 - `max_count`: Max number of tags to display (default: 100)
 - `size_from`: Minimum font size for tags (default: 16)
 - `size_to`: Maximum font size for tags (default: 36)
-- `error_message`: Custom error message (default: 'ERROR: Can\'t find tags.')
+- `error_message`: Message shown when there are no tags (default: 'ERROR: Can\'t find tags.', shown only to logged-in editors; a custom message shows to everyone; empty shows nothing)
 
 == Changelog ==
+= 1.0.5 =
+- A list with nothing to show no longer shows visitors an error. The built-in message ("ERROR: Can't find posts.") now appears only to people who can edit the site; a custom `error_message` still shows to everyone, and `error_message=""` shows nothing
+
 = 1.0.4 =
 - Accessibility fix: child pages and child terms are now nested inside their parent's list item, so the list HTML is valid and screen readers present subpages as part of their parent (WCAG 1.3.1)
 

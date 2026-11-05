@@ -4,7 +4,7 @@
  * Plugin Name:       Easy Content Lists
  * Plugin URI:        https://razorfrog.com/easy-content-lists/
  * Description:       Shortcodes for easily listing all your pages, posts, taxonomies, and tags.
- * Version:           1.0.4
+ * Version:           1.0.5
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Razorfrog Web Design
@@ -29,6 +29,34 @@ function rflists_enqueue_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'rflists_enqueue_styles' );
 
+
+/******************************************************************************************************************/
+/* Output when a list has nothing to show. */
+/******************************************************************************************************************/
+
+if ( ! function_exists( 'rflists_empty_output' ) ) {
+		/**
+ 		* What a list shows when it finds nothing.
+ 		*
+ 		* The built-in message (e.g. "ERROR: Can't find posts.") is only shown to people who can edit
+ 		* the site, so visitors never see an error on a list that is simply empty right now (no rental
+ 		* listings, no posts in a category yet). A custom error_message is shown to everyone, and
+ 		* error_message="" shows nothing at all.
+ 		*
+ 		* @param string $message The error_message attribute as used.
+ 		* @param string $default The shortcode's built-in message.
+ 		* @return string HTML, or an empty string.
+ 		*/
+		function rflists_empty_output( $message, $default ) {
+				if ( '' === trim( $message ) ) {
+						return '';
+				}
+				if ( $message === $default && ! current_user_can( 'edit_posts' ) ) {
+						return '';
+				}
+				return "<p class='rf-list-error'>" . esc_html( $message ) . '</p>';
+		}
+}
 
 /******************************************************************************************************************/
 /* Pages list shortcode [razorfrog_pages_list]. */
@@ -131,7 +159,7 @@ if ( ! shortcode_exists( 'razorfrog_pages_list' ) ) {
 						rflists_sort_pages_hierarchically( $pages, $pages_hierarchical, intval( $atts['child_of'] ) );
 						$return_string = rflists_print_pages_hierarchically( $pages_hierarchical, intval( $atts['col'] ), 1 );
 				} else {
-						$return_string = "<p class='rf-list-error'>" . esc_html( $atts['error_message'] ) . '</p>';
+						$return_string = rflists_empty_output( $atts['error_message'], 'ERROR: Can\'t find pages.' );
 				}
 
 				return $return_string;
@@ -226,7 +254,7 @@ if ( ! shortcode_exists( 'razorfrog_posts_list' ) ) {
 						endwhile;
 						$return_string .= '</ul>';
 				} else {
-						$return_string = "<p class='rf-list-error'>" . esc_html( $atts['error_message'] ) . '</p>';
+						$return_string = rflists_empty_output( $atts['error_message'], 'ERROR: Can\'t find posts.' );
 				}
 
 				// Reset postdata.
@@ -336,7 +364,7 @@ if ( ! shortcode_exists( 'razorfrog_taxonomy_list' ) ) {
 						rflists_sort_terms_hierarchically( $terms, $terms_hierarchical );
 						$return_string = rflists_print_terms_hierarchically( $terms_hierarchical, $col, $count, 1 );
 				} else {
-						$return_string = "<p class='rf-list-error'>" . esc_html( $atts['error_message'] ) . '</p>';
+						$return_string = rflists_empty_output( $atts['error_message'], 'ERROR: Can\'t find taxonomy.' );
 				}
 
 				return $return_string;
@@ -382,7 +410,7 @@ if ( ! shortcode_exists( 'razorfrog_tags_list' ) ) {
 				} elseif ( 'include' === $atts['query_type'] ) {
 						$tag_args['include'] = array_map( 'intval', explode( ',', $atts['tags_ids'] ) );
 				} else {
-						return "<p class='rf-list-error'>" . esc_html( $atts['error_message'] ) . '</p>';
+						return rflists_empty_output( $atts['error_message'], 'ERROR: Can\'t find tags.' );
 				}
 
 				$tags = get_tags( $tag_args );
@@ -391,7 +419,7 @@ if ( ! shortcode_exists( 'razorfrog_tags_list' ) ) {
 						$cloud = rflists_build_tag_cloud( $tags, $atts );
 						return '<div class="rf-tag-list">' . implode( '', $cloud ) . '</div>';
 				} else {
-						return "<p class='rf-list-error'>" . esc_html( $atts['error_message'] ) . '</p>';
+						return rflists_empty_output( $atts['error_message'], 'ERROR: Can\'t find tags.' );
 				}
 		}
 		add_shortcode( 'razorfrog_tags_list', 'rflists_tags_list_function' );
