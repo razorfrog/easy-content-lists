@@ -241,7 +241,7 @@ if ( ! shortcode_exists( 'razorfrog_posts_list' ) ) {
 
 				// Generates output.
 				if ( $query->have_posts() ) {
-						$return_string = "<ul class='rf-post-list rf-post-list-type-{$atts['post_type']} rf-post-col-$col'>";
+						$return_string = "<ul class='rf-post-list rf-post-list-type-" . esc_attr( sanitize_html_class( $atts['post_type'] ) ) . " rf-post-col-$col'>";
 						while ( $query->have_posts() ) :
 								$query->the_post();
 
