@@ -4,7 +4,7 @@ Tags: pages, posts, taxonomies, tags, lists
 Requires at least: 5.2
 Tested up to: 7.1
 Requires PHP: 7.2
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,10 @@ Use the following shortcodes to display lists on your WordPress site:
 - `error_message`: Message shown when there are no tags (default: 'ERROR: Can\'t find tags.', shown only to logged-in editors; a custom message shows to everyone; empty shows nothing)
 
 == Changelog ==
+= 1.0.6 =
+- Security: the post type in a posts list is now escaped in the list's CSS class
+- The stylesheet is now versioned by its modified time, so style changes are no longer cached for a year
+
 = 1.0.5 =
 - A list with nothing to show no longer shows visitors an error. The built-in message ("ERROR: Can't find posts.") now appears only to people who can edit the site; a custom `error_message` still shows to everyone, and `error_message=""` shows nothing
 

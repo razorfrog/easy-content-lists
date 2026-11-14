@@ -4,7 +4,7 @@
  * Plugin Name:       Easy Content Lists
  * Plugin URI:        https://razorfrog.com/easy-content-lists/
  * Description:       Shortcodes for easily listing all your pages, posts, taxonomies, and tags.
- * Version:           1.0.5
+ * Version:           1.0.6
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Razorfrog Web Design
@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 function rflists_enqueue_styles() {
 		$css_url     = plugin_dir_url( __FILE__ ) . 'style.css';
 		$css_path    = plugin_dir_path( __FILE__ ) . 'style.css';
-		$css_version = file_exists( $css_path ) ? (string) filemtime( $css_path ) : '1.0.5';
+		$css_version = file_exists( $css_path ) ? (string) filemtime( $css_path ) : '1.0.6';
 		wp_enqueue_style( 'razorfrog-plugin-styles', $css_url, array(), $css_version );
 }
 add_action( 'wp_enqueue_scripts', 'rflists_enqueue_styles' );
