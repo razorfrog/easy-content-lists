@@ -24,7 +24,8 @@ defined( 'ABSPATH' ) || exit;
  */
 function rflists_enqueue_styles() {
 		$css_url     = plugin_dir_url( __FILE__ ) . 'style.css';
-		$css_version = '1.0.0';
+		$css_path    = plugin_dir_path( __FILE__ ) . 'style.css';
+		$css_version = file_exists( $css_path ) ? (string) filemtime( $css_path ) : '1.0.5';
 		wp_enqueue_style( 'razorfrog-plugin-styles', $css_url, array(), $css_version );
 }
 add_action( 'wp_enqueue_scripts', 'rflists_enqueue_styles' );
