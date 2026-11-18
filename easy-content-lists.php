@@ -4,7 +4,7 @@
  * Plugin Name:       Easy Content Lists
  * Plugin URI:        https://razorfrog.com/easy-content-lists/
  * Description:       Shortcodes for easily listing all your pages, posts, taxonomies, and tags.
- * Version:           1.0.6
+ * Version:           1.1.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Razorfrog Web Design
@@ -25,10 +25,41 @@ defined( 'ABSPATH' ) || exit;
 function rflists_enqueue_styles() {
 		$css_url     = plugin_dir_url( __FILE__ ) . 'style.css';
 		$css_path    = plugin_dir_path( __FILE__ ) . 'style.css';
-		$css_version = file_exists( $css_path ) ? (string) filemtime( $css_path ) : '1.0.6';
+		$css_version = file_exists( $css_path ) ? (string) filemtime( $css_path ) : '1.1.0';
 		wp_enqueue_style( 'razorfrog-plugin-styles', $css_url, array(), $css_version );
 }
 add_action( 'wp_enqueue_scripts', 'rflists_enqueue_styles' );
+
+/******************************************************************************************************************/
+/* Plugins screen: help and review links. */
+/******************************************************************************************************************/
+
+/**
+ * Adds "Get help" and "Leave a review" links to this plugin's row on the Plugins screen.
+ *
+ * @param string[] $links Existing row meta links.
+ * @param string   $file  Plugin basename.
+ * @return string[]
+ */
+function rflists_row_meta( $links, $file ) {
+	if ( plugin_basename( __FILE__ ) !== $file ) {
+		return $links;
+	}
+
+	$links[] = sprintf(
+		'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+		esc_url( 'https://wordpress.org/support/plugin/easy-content-lists/' ),
+		esc_html__( 'Get help', 'easy-content-lists' )
+	);
+	$links[] = sprintf(
+		'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+		esc_url( 'https://wordpress.org/support/plugin/easy-content-lists/reviews/#new-post' ),
+		esc_html__( 'Leave a review', 'easy-content-lists' )
+	);
+
+	return $links;
+}
+add_filter( 'plugin_row_meta', 'rflists_row_meta', 10, 2 );
 
 
 /******************************************************************************************************************/
